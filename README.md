@@ -1,4 +1,4 @@
-# Backend-communication
+# Service-to-service communication
 
 ### How to contribute
 * Read the [contribution guidelines](https://github.com/microserv/contribution-guidelines)

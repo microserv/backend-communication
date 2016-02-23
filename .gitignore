@@ -1,6 +1,7 @@
 *.o
 
-bin/*
+src/bin/*
+src/obj/*
 
 ### Vim ###
 [._]*.s[a-w][a-z]

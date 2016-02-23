@@ -2,4 +2,4 @@
 set -e
 
 echo "Starting the queue broker..."
-bin/queue_broker
+src/bin/queue_broker

@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-import os, sys, time, signal, argparse
-import twisted.internet.reactor
-from entangled.node import EntangledNode
 from entangled.kademlia.datastore import SQLiteDataStore
+from entangled.node import EntangledNode
+import argparse
 import netifaces as ni
+import os
+import twisted.internet.reactor
+
 
 class Node:
 
@@ -18,12 +20,10 @@ class Node:
         if os.path.isfile(filename):
             os.remove(filename)
 
-        self.data_store = SQLiteDataStore(dbFile = filename)
-
+        self.data_store = SQLiteDataStore(dbFile=filename)
 
     def handle_error(self, failure):
         print 'An error has occurred:', failure.getErrorMessage()
-
 
     def get_value(self, key):
         print 'Retrieving value from DHT for key "%s"...' % key
@@ -35,7 +35,6 @@ class Node:
         deferredResult = node.iterativeDelete(key)
         deferredResult.addErrback(handle_error)
 
-
     def store_val(self, key, value):
         """ Stores the specified value in the DHT using the specified key """
 
@@ -43,11 +42,9 @@ class Node:
         deferredResult = self.node.iterativeStore(key, value)
         deferredResult.addErrback(self.handle_error)
 
-
     def get_ip(self, interface):
         ni.ifaddresses(interface)
         return ni.ifaddresses(interface)[2][0]['addr']
-
 
     def start(self):
         print 'Starting network...'
@@ -55,17 +52,19 @@ class Node:
         print "The network is now running."
         twisted.internet.reactor.run()
 
-
     def stop(self):
         """ Stops the Twisted reactor, and thus the script """
         print '\nStopping Kademlia node and terminating script...'
         twisted.internet.reactor.stop()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("port", type=int, help="Usage: PORT_TO_USE")
-    parser.add_argument("-f", "--boostrap_file", help="Usage: -f FILENAME_TO_FILE_WITH_KNOWN_NODES")
-    parser.add_argument("-b", "--bootstrap", nargs=2, help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
+    parser.add_argument("-f", "--boostrap_file",
+                        help="Usage: -f FILENAME_TO_FILE_WITH_KNOWN_NODES")
+    parser.add_argument("-b", "--bootstrap", nargs=2,
+                        help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
     args = parser.parse_args()
 
     node = Node(**vars(args))

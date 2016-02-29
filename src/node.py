@@ -74,8 +74,6 @@ class Node:
         return ni.ifaddresses(interface)[2][0]['addr']
 
     def start(self):
-        print('Starting network...')
-        self.node.joinNetwork()
         print("The network is now running.")
         twisted.internet.reactor.run()
 

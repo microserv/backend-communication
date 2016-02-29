@@ -13,16 +13,16 @@ import twisted.internet.reactor
 class Node:
 
     def __init__(self, port, bootstrap, boostrap_file):
-        self.init_datastore('/tmp/dbFile%s.db' % port)
+        self.data_store = self.create_datastore('/tmp/dbFile%s.db' % port)
         print('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port, dataStore=self.data_store)
         self.start()
 
-    def init_datastore(self, filename):
+    def create_datastore(self, filename):
         if os.path.isfile(filename):
             os.remove(filename)
 
-        self.data_store = SQLiteDataStore(dbFile=filename)
+        return SQLiteDataStore(dbFile=filename)
 
     def handle_error(self, failure):
         print('An error has occurred:', failure.getErrorMessage())

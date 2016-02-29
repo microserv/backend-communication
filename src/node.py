@@ -54,13 +54,13 @@ class Node:
     def get_value(self, key):
         print('Retrieving value from DHT for key "%s"...' % key)
         deferredResult = self.node.iterativeFindValue(key)
-        deferredResult.addErrback(handle_error)
         deferredResult.addCallback(self.print_val)
+        deferredResult.addErrback(self.handle_error)
 
     def del_val(self, key):
         print('\nDeleting key/value from DHT...')
         deferredResult = node.iterativeDelete(key)
-        deferredResult.addErrback(handle_error)
+        deferredResult.addErrback(self.handle_error)
 
     def store_val(self, key, value):
         """ Stores the specified value in the DHT using the specified key """

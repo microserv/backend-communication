@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 from entangled.kademlia.datastore import SQLiteDataStore
 from entangled.node import EntangledNode
 import argparse
 import netifaces as ni
 import os
+import sys
 import twisted.internet.reactor
 
 
@@ -12,7 +14,7 @@ class Node:
 
     def __init__(self, port, bootstrap, boostrap_file):
         self.init_datastore('/tmp/dbFile%s.db' % port)
-        print 'Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port)
+        print('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port, dataStore=self.data_store)
         self.start()
 
@@ -23,22 +25,22 @@ class Node:
         self.data_store = SQLiteDataStore(dbFile=filename)
 
     def handle_error(self, failure):
-        print 'An error has occurred:', failure.getErrorMessage()
+        print('An error has occurred:', failure.getErrorMessage())
 
     def get_value(self, key):
-        print 'Retrieving value from DHT for key "%s"...' % key
+        print('Retrieving value from DHT for key "%s"...' % key)
         deferredResult = self.node.iterativeFindValue(key)
         deferredResult.addErrback(handle_error)
 
     def del_val(self, key):
-        print '\nDeleting key/value from DHT...'
+        print('\nDeleting key/value from DHT...')
         deferredResult = node.iterativeDelete(key)
         deferredResult.addErrback(handle_error)
 
     def store_val(self, key, value):
         """ Stores the specified value in the DHT using the specified key """
 
-        print 'Soring value; Key: %s, Value: %s' % (key, value)
+        print('Soring value; Key: %s, Value: %s' % (key, value))
         deferredResult = self.node.iterativeStore(key, value)
         deferredResult.addErrback(self.handle_error)
 
@@ -47,14 +49,14 @@ class Node:
         return ni.ifaddresses(interface)[2][0]['addr']
 
     def start(self):
-        print 'Starting network...'
+        print('Starting network...')
         self.node.joinNetwork()
-        print "The network is now running."
+        print("The network is now running.")
         twisted.internet.reactor.run()
 
     def stop(self):
         """ Stops the Twisted reactor, and thus the script """
-        print '\nStopping Kademlia node and terminating script...'
+        print('\nStopping Kademlia node and terminating script...')
         twisted.internet.reactor.stop()
 
 

@@ -16,7 +16,25 @@ class Node:
         self.data_store = self.create_datastore('/tmp/dbFile%s.db' % port)
         print('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port, dataStore=self.data_store)
+        bootstrap_nodes = []
+
+        if bootstrap:
+            bootstrap_nodes.append(self.format_bootstrap_node_info(bootstrap))
+        elif boostrap_file:
+            # TODO: Actually parse the file.
+            pass
+
+        if bootstrap_nodes:
+            print("Starting node with %d bootstrap nodes..." %  len(bootstrap_nodes))
+            print(bootstrap_nodes)
+            self.node.joinNetwork(bootstrap_nodes)
+        else:
+            self.node.joinNetwork()
+
         self.start()
+
+    def format_bootstrap_node_info(self, node_info):
+        return (node_info[0], int(node_info[1]))
 
     def create_datastore(self, filename):
         if os.path.isfile(filename):

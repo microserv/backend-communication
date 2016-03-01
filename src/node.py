@@ -31,7 +31,6 @@ class Node:
         else:
             self.node.joinNetwork()
 
-        self.start()
 
     def format_bootstrap_node_info(self, node_info):
         return (node_info[0], int(node_info[1]))

@@ -26,7 +26,7 @@ class NodeAPI(Resource):
         if not request.json or "value" not in request.json or not service_name:
             abort(400)
         else:
-            self.node.store_value(str(service_name), request.json["value"])
+            self.node.store_value(str(service_name), str(request.json["value"]))
             return SUCCESS
 
 

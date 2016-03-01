@@ -18,14 +18,14 @@ class NodeAPI(Resource):
 
     def get(self, service_name=None):
         if service_name:
-            self.node.get_value(service_name)
+            self.node.get_value(str(service_name))
             return SUCCESS
 
     def post(self, service_name=None):
         if not request.json or "value" not in request.json or not service_name:
             abort(400)
         else:
-            self.node.store_value(service_name, request.json["value"])
+            self.node.store_value(str(service_name), request.json["value"])
             return SUCCESS
 
 

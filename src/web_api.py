@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, abort, jsonify, request
 from flask_restful import Resource, Api
-from twisted.web.wsgi import WSGIResource
-from twisted.web.server import Site
-from twisted.internet import reactor
 from node import Node
+from twisted.internet import reactor
+from twisted.web.server import Site
+from twisted.web.wsgi import WSGIResource
 import argparse
 
 app = Flask(__name__)

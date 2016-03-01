@@ -8,6 +8,7 @@ from twisted.web.wsgi import WSGIResource
 import argparse
 
 app = Flask(__name__)
+app.debug = True
 api = Api(app)
 SUCCESS = 200
 

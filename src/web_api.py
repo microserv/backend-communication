@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import print_function
 from node import Node
 from twisted.internet import reactor
 from twisted.web.resource import Resource

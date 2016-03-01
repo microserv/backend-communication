@@ -1,2 +1,4 @@
 netifaces
 Twisted
+flask
+flask-restful

@@ -57,12 +57,12 @@ class Node:
         deferredResult.addCallback(self.print_val)
         deferredResult.addErrback(self.handle_error)
 
-    def del_val(self, key):
+    def del_value(self, key):
         print('\nDeleting key/value from DHT...')
         deferredResult = node.iterativeDelete(key)
         deferredResult.addErrback(self.handle_error)
 
-    def store_val(self, key, value):
+    def store_value(self, key, value):
         """ Stores the specified value in the DHT using the specified key """
 
         print('Soring value; Key: %s, Value: %s' % (key, value))

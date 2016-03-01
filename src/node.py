@@ -15,7 +15,7 @@ class Node:
     def __init__(self, port, bootstrap, boostrap_file):
         self.data_store = self.create_datastore('/tmp/dbFile%s.db' % port)
         print('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
-        self.node = EntangledNode(udpPort=port, dataStore=self.data_store)
+        self.node = EntangledNode(udpPort=port)
         bootstrap_nodes = []
 
         if bootstrap:

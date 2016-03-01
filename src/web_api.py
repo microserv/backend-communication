@@ -4,8 +4,8 @@ from __future__ import print_function
 from node import Node
 from twisted.internet import reactor
 from twisted.web.resource import Resource
-from twisted.web.server import Site
 from twisted.web.server import NOT_DONE_YET
+from twisted.web.server import Site
 import argparse
 import cgi
 import json

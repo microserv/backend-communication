@@ -26,7 +26,6 @@ class Node:
 
         if bootstrap_nodes:
             print("Starting node with %d bootstrap nodes..." %  len(bootstrap_nodes))
-            print(bootstrap_nodes)
             self.node.joinNetwork(bootstrap_nodes)
         else:
             self.node.joinNetwork()

@@ -10,6 +10,7 @@ import argparse
 import cgi
 import json
 
+
 class NodeAPI(Resource):
     def __init__(self, node):
         Resource.__init__(self)
@@ -18,16 +19,6 @@ class NodeAPI(Resource):
     def getChild(self, service_name, request):
         return Service(self.node, service_name)
 
-    def post(self, service_name=None):
-        if not request.json or "value" not in request.json or not service_name:
-            abort(400)
-        else:
-            successful = self.node.store_value(str(service_name), str(request.json["value"]))
-
-            if successful:
-                return SUCCESS
-            else:
-                return abort(500)
 
 class Service(Resource):
     def __init__(self, node, service_name):
@@ -54,10 +45,10 @@ class Service(Resource):
 
     def render_POST(self, request):
         json_data = json.loads(cgi.escape(request.content.read()))
-        deferredResult = self.node.store_value(self.service_name, json_data["value"])
+        deferredResult = self.node.store_value(self.service_name,
+                                               json_data["value"])
         deferredResult.addCallback(self.async_success, request)
         return NOT_DONE_YET
-
 
 
 def parse_arguments():
@@ -77,5 +68,5 @@ if __name__ == '__main__':
     site = Site(root)
 
     reactor.listenTCP(args.port + 1, site)
-    print "API listening on:", args.port+1
+    print("API listening on:", args.port+1)
     reactor.run()

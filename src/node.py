@@ -52,8 +52,8 @@ class Node:
     def get_value(self, key):
         print('Retrieving value from DHT for key "%s"...' % key)
         deferredResult = self.node.iterativeFindValue(key)
-        deferredResult.addCallback(self.print_value)
         deferredResult.addErrback(self.handle_error)
+        return deferredResult
 
     def del_value(self, key):
         print('\nDeleting key/value from DHT...')
@@ -66,6 +66,7 @@ class Node:
         print('Soring value; Key: %s, Value: %s' % (key, value))
         deferredResult = self.node.iterativeStore(key, value)
         deferredResult.addErrback(self.handle_error)
+        return deferredResult
 
     def get_ip(self, interface):
         ni.ifaddresses(interface)

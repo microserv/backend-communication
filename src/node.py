@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-from entangled.kademlia.datastore import SQLiteDataStore
 from entangled.node import EntangledNode
 import argparse
 import netifaces as ni
@@ -33,12 +32,6 @@ class Node:
 
     def format_bootstrap_node_info(self, node_info):
         return (node_info[0], int(node_info[1]))
-
-    def create_datastore(self, filename):
-        if os.path.isfile(filename):
-            os.remove(filename)
-
-        return SQLiteDataStore(dbFile=filename)
 
     def handle_error(self, failure):
         print('An error has occurred:', failure.getErrorMessage())

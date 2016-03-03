@@ -36,12 +36,6 @@ class Node:
     def handle_error(self, failure):
         print('An error has occurred:', failure.getErrorMessage())
 
-    def print_value(self, result):
-        if type(result) == dict:
-            print('Value successfully retrieved:', result)
-        else:
-            print('Value not found')
-
     def get_value(self, key):
         print('Retrieving value from DHT for key "%s"...' % key)
         deferredResult = self.node.iterativeFindValue(key)

@@ -4,6 +4,7 @@ from twisted.internet import reactor
 from threading import Thread
 
 class TestNodeSetup(unittest.TestCase):
+
     def setUp(self):
         self.node = Node(12345, ('127.0.0.1', 12346), None)
 

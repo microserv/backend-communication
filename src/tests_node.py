@@ -3,7 +3,7 @@ from node import Node
 from twisted.internet import reactor
 from threading import Thread
 
-class NodeSetup(unittest.TestCase):
+class TestNodeSetup(unittest.TestCase):
     def setUp(self):
         self.node = Node(12345, ('127.0.0.1', 12346), None)
 
@@ -15,7 +15,7 @@ class NodeSetup(unittest.TestCase):
         self.node = None
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(NodeSetup)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestNodeSetup)
     test_runner = unittest.TextTestRunner()
     test_runner.run(suite)
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -9,18 +10,72 @@ from twisted.web.server import Site
 import argparse
 import cgi
 import json
+import util
 
 
 class NodeAPI(Resource):
+
     def __init__(self, node):
         Resource.__init__(self)
         self.node = node
 
-    def getChild(self, service_name, request):
-        return Service(self.node, service_name)
+    def getChild(self, request_str, request):
+        if request_str in ['register', 'unregister']:
+            return Register(self.node, request_str)
+        else:
+            return Service(self.node, request_str)
 
+class Register(Resource):
+
+    def __init__(self, node, register_action):
+        Resource.__init__(self)
+        self.node = node
+        self.register_action = register_action
+
+    def unregister(self, service_name):
+        pass
+
+    def async_success(self, result, request):
+        if not result:
+            request.setResponseCode(200)
+            request.finish()
+        else:
+            request.setResponseCode(500)
+            request.finish()
+
+    def initiate_registration(self, request):
+        json_data = json.loads(cgi.escape(request.content.read()))
+        service_name = str(json_data["value"])
+
+        deferred_result = self.node.get_value(service_name)
+        deferred_result.addCallback(self.finish_registration, request, service_name)
+        return NOT_DONE_YET
+
+    def finish_registration(self, result, request, service_name):
+        node_ip = self.node.get_ip("wlan0")
+        service_ips = []
+
+        if result:
+            pass
+
+        service_ips.append(node_ip)
+        deferred_result = self.node.store_value(service_name,
+                                               util.ips_to_string(service_ips))
+        deferred_result.addCallback(self.async_success, request)
+        print("Registering {} as {}".format(node_ip, service_name))
+
+        return NOT_DONE_YET
+
+    def render_POST(self, request):
+        if self.register_action == 'register':
+            self.initiate_registration(request)
+            return NOT_DONE_YET
+        else:
+            self.unregister(service_name)
+            return 404
 
 class Service(Resource):
+
     def __init__(self, node, service_name):
         Resource.__init__(self)
         self.service_name = service_name

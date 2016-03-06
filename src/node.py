@@ -37,22 +37,22 @@ class Node:
 
     def get_value(self, key):
         self.logger.info('Retrieving "%s"...' % key)
-        deferredResult = self.node.iterativeFindValue(key)
-        deferredResult.addErrback(self.handle_error)
-        return deferredResult
+        deferred_result = self.node.iterativeFindValue(key)
+        deferred_result.addErrback(self.handle_error)
+        return deferred_result
 
     def del_value(self, key):
         self.logger.info('\nDeleting: "%s"' % key)
-        deferredResult = node.iterativeDelete(key)
-        deferredResult.addErrback(self.handle_error)
+        deferred_result = node.iterativeDelete(key)
+        deferred_result.addErrback(self.handle_error)
 
     def store_value(self, key, value):
         """ Stores the specified value in the DHT using the specified key """
 
         self.logger.info('Soring "%s" -> "%s"' % (key, value))
-        deferredResult = self.node.iterativeStore(key, value)
-        deferredResult.addErrback(self.handle_error)
-        return deferredResult
+        deferred_result = self.node.iterativeStore(key, value)
+        deferred_result.addErrback(self.handle_error)
+        return deferred_result
 
     def get_ip(self, interface):
         ni.ifaddresses(interface)

@@ -101,15 +101,15 @@ class Service(Resource):
         request.finish()
 
     def render_GET(self, request):
-        deferredResult = self.node.get_value(self.service_name)
-        deferredResult.addCallback(self.async_return, request)
+        deferred_result = self.node.get_value(self.service_name)
+        deferred_result.addCallback(self.async_return, request)
         return NOT_DONE_YET
 
     def render_POST(self, request):
         json_data = json.loads(cgi.escape(request.content.read()))
-        deferredResult = self.node.store_value(self.service_name,
+        deferred_result = self.node.store_value(self.service_name,
                                                json_data["value"])
-        deferredResult.addCallback(self.async_success, request)
+        deferred_result.addCallback(self.async_success, request)
         return NOT_DONE_YET
 
 

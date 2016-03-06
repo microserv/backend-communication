@@ -13,6 +13,7 @@ import util
 
 logger = util.create_logger("web_api.log")
 
+
 class NodeAPI(Resource):
 
     def __init__(self, node):
@@ -24,6 +25,7 @@ class NodeAPI(Resource):
             return Register(self.node, request_str)
         else:
             return Service(self.node, request_str)
+
 
 class Register(Resource):
 
@@ -49,7 +51,8 @@ class Register(Resource):
         service_name = str(json_data["value"])
 
         deferred_result = self.node.get_value(service_name)
-        deferred_result.addCallback(self.finish_registration, request, service_name)
+        deferred_result.addCallback(self.finish_registration,
+                                    request, service_name)
         return NOT_DONE_YET
 
     def finish_registration(self, result, request, service_name):
@@ -61,7 +64,7 @@ class Register(Resource):
 
         service_ips.append(node_ip)
         deferred_result = self.node.store_value(service_name,
-                                               util.ips_to_string(service_ips))
+                                            util.ips_to_string(service_ips))
         deferred_result.addCallback(self.async_success, request)
         logger.info("Registering {} as {}".format(node_ip, service_name))
 
@@ -74,6 +77,7 @@ class Register(Resource):
         else:
             self.unregister(service_name)
             return 404
+
 
 class Service(Resource):
 

@@ -56,8 +56,8 @@ class Register(Resource):
         node_ip = self.node.get_ip("wlan0")
         service_ips = []
 
-        if result:
-            pass
+        if type(result) is dict:
+            service_ips.extend(util.split_ips(result[service_name]))
 
         service_ips.append(node_ip)
         deferred_result = self.node.store_value(service_name,

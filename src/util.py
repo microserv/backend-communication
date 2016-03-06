@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import logging
+import logging.config
 
 IP_DELIM = "|"
 
@@ -17,3 +19,32 @@ def ips_to_string(ip_list):
 
 def split_ips(ip_as_string):
     return ip_as_string.split(IP_DELIM)
+
+def create_logger(filename):
+    logger = logging.getLogger(__name__)
+    logging.config.dictConfig({
+        'version': 1,
+        'disable_existing_loggers': False,
+
+        'formatters': {
+            'standard': {
+                'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+            },
+        },
+        'handlers': {
+            'default': {
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': filename,
+                'formatter': 'standard',
+            },
+        },
+
+        'loggers': {
+            '': {
+                'handlers': ['default'],
+                'level': 'INFO',
+                'propagate': True
+            }
+        }
+    })
+    return logger

@@ -11,6 +11,7 @@ import cgi
 import json
 import util
 
+logger = util.create_logger("web_api.log")
 
 class NodeAPI(Resource):
 
@@ -36,7 +37,7 @@ class Register(Resource):
 
     def async_success(self, result, request):
         if not result:
-            print("Action successful!")
+            logger.info("Action successful!")
             request.setResponseCode(200)
             request.finish()
         else:
@@ -62,7 +63,7 @@ class Register(Resource):
         deferred_result = self.node.store_value(service_name,
                                                util.ips_to_string(service_ips))
         deferred_result.addCallback(self.async_success, request)
-        print("Registering {} as {}".format(node_ip, service_name))
+        logger.info("Registering {} as {}".format(node_ip, service_name))
 
         return NOT_DONE_YET
 
@@ -107,11 +108,12 @@ class Service(Resource):
 
 
 if __name__ == '__main__':
+
     args = util.parse_node_arguments()
-    node = Node(**vars(args))
+    node = Node(logger, **vars(args))
     root = NodeAPI(node)
     site = Site(root)
 
     reactor.listenTCP(args.port + 1, site)
-    print("API listening on:", args.port+1)
+    logger.info("API listening on: {}".format(args.port + 1))
     reactor.run()

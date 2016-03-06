@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-IP_DELIM = ":"
+IP_DELIM = "|"
 
 def ips_to_string(ip_list):
     return IP_DELIM.join(ip_list)

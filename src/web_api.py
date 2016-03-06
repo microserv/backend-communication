@@ -16,9 +16,11 @@ logger = util.create_logger("web_api.log")
 
 class NodeAPI(Resource):
 
-    def __init__(self, node):
+    def __init__(self, node, web_port):
         Resource.__init__(self)
         self.node = node
+        reactor.listenTCP(web_port, Site(self))
+        logger.info("API listening on: {}".format(web_port))
 
     def getChild(self, request_str, request):
         if request_str in ['register', 'unregister']:
@@ -115,9 +117,6 @@ if __name__ == '__main__':
 
     args = util.parse_node_arguments()
     node = Node(logger, **vars(args))
-    root = NodeAPI(node)
-    site = Site(root)
+    root = NodeAPI(node, 8080)
 
-    reactor.listenTCP(args.port + 1, site)
-    logger.info("API listening on: {}".format(args.port + 1))
     reactor.run()

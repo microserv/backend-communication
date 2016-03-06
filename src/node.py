@@ -65,10 +65,3 @@ class Node:
         """ Stops the Twisted reactor, and thus the script """
         self.logger.info('\nStopping node and terminating script...')
         twisted.internet.reactor.stop()
-
-
-if __name__ == '__main__':
-    args = util.parse_node_arguments()
-
-    node = Node(**vars(args))
-    node.start()

@@ -3,11 +3,11 @@
 
 from __future__ import print_function
 from entangled.node import EntangledNode
-import argparse
 import netifaces as ni
 import os
 import sys
 import twisted.internet.reactor
+import util
 
 
 class Node:
@@ -66,11 +66,7 @@ class Node:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("port", type=int, help="Usage: PORT_TO_USE")
-    parser.add_argument("-b", "--bootstrap", nargs=2,
-                        help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
-    args = parser.parse_args()
+    args = util.parse_node_arguments()
 
     node = Node(**vars(args))
     node.start()

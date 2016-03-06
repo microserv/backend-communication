@@ -7,7 +7,6 @@ from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
 from twisted.web.server import Site
-import argparse
 import cgi
 import json
 import util
@@ -107,16 +106,8 @@ class Service(Resource):
         return NOT_DONE_YET
 
 
-def parse_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("port", type=int, help="Usage: PORT_TO_USE")
-    parser.add_argument("-b", "--bootstrap", nargs=2,
-                        help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
-    return parser.parse_args()
-
-
 if __name__ == '__main__':
-    args = parse_arguments()
+    args = util.parse_node_arguments()
     node = Node(**vars(args))
     root = NodeAPI(node)
     site = Site(root)

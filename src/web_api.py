@@ -37,6 +37,7 @@ class Register(Resource):
 
     def async_success(self, result, request):
         if not result:
+            print("Action successful!")
             request.setResponseCode(200)
             request.finish()
         else:

@@ -12,16 +12,13 @@ import twisted.internet.reactor
 
 class Node:
 
-    def __init__(self, port, bootstrap, boostrap_file):
+    def __init__(self, port, bootstrap):
         print('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port)
         self.bootstrap_nodes = []
 
         if bootstrap:
             self.bootstrap_nodes.append(self.format_bootstrap_node_info(bootstrap))
-        elif boostrap_file:
-            # TODO: Actually parse the file.
-            pass
 
         if self.bootstrap_nodes:
             print("Starting node with %d bootstrap nodes..." %  len(self.bootstrap_nodes))
@@ -71,8 +68,6 @@ class Node:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("port", type=int, help="Usage: PORT_TO_USE")
-    parser.add_argument("-f", "--boostrap_file",
-                        help="Usage: -f FILENAME_TO_FILE_WITH_KNOWN_NODES")
     parser.add_argument("-b", "--bootstrap", nargs=2,
                         help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
     args = parser.parse_args()

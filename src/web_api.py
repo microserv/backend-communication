@@ -110,8 +110,6 @@ class Service(Resource):
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("port", type=int, help="Usage: PORT_TO_USE")
-    parser.add_argument("-f", "--boostrap_file",
-                        help="Usage: -f FILENAME_TO_FILE_WITH_KNOWN_NODES")
     parser.add_argument("-b", "--bootstrap", nargs=2,
                         help="Usage: KNOWN_NODE_IP KNOWN_NODE_PORT")
     return parser.parse_args()

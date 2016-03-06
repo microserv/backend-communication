@@ -6,7 +6,7 @@ from threading import Thread
 class TestNodeSetup(unittest.TestCase):
 
     def setUp(self):
-        self.node = Node(12345, ('127.0.0.1', 12346), None)
+        self.node = Node(12345, ('127.0.0.1', 12346))
 
     def test_setup(self):
         self.assertEqual(self.node.node._listeningPort.port, 12345, "Port set incorrectly!")

@@ -10,7 +10,7 @@
 
 ### Usage
 
-Each node runs a web API on port 8080.
+Each node runs a HTTP API on port 8080.
 This API can be used to register/unregister services and get the IPs of an
 abitary service.
 

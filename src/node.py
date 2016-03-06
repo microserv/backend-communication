@@ -9,6 +9,7 @@ import sys
 import twisted.internet.reactor
 import util
 
+
 class Node:
 
     def __init__(self, logger, port, bootstrap):

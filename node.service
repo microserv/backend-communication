@@ -6,7 +6,6 @@ Type=simple
 ExecStart=/usr/local/bin/node_api 22222
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
-GuessMainPID=yes
 
 [Install]
 WantedBy=multi-user.target

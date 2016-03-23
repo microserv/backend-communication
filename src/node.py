@@ -57,12 +57,3 @@ class Node:
     def get_ip(self, interface):
         ni.ifaddresses(interface)
         return ni.ifaddresses(interface)[2][0]['addr']
-
-    def start(self):
-        self.logger.info("The network is now running.")
-        twisted.internet.reactor.run()
-
-    def stop(self):
-        """ Stops the Twisted reactor, and thus the script """
-        self.logger.info('\nStopping node and terminating script...')
-        twisted.internet.reactor.stop()

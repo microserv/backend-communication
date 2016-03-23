@@ -12,18 +12,15 @@ import util
 
 class Node:
 
-    def __init__(self, logger, port, bootstrap):
+    def __init__(self, logger, port, bootstrap_node=None):
         self.logger = logger
         self.logger.info('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port)
-        self.bootstrap_nodes = []
 
-        if bootstrap:
-            self.bootstrap_nodes.append(self.format_bootstrap_node_info(bootstrap))
-
-        if self.bootstrap_nodes:
-            self.logger.info("Starting node with %d bootstrap nodes..." %  len(self.bootstrap_nodes))
-            self.node.joinNetwork(self.bootstrap_nodes)
+        if bootstrap_node:
+            self.logger.info("Connecting to network through: %s:%s" % (bootstrap_node[0], bootstrap_node[1]))
+            formatted_bootstrap_node = self.format_bootstrap_node_info(bootstrap_node)
+            self.node.joinNetwork([formatted_bootstrap_node])
         else:
             self.node.joinNetwork()
 

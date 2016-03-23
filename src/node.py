@@ -14,7 +14,7 @@ class Node:
 
     def __init__(self, logger, port, bootstrap_node=None):
         self.logger = logger
-        self.logger.info('Creating Entangled Node on %s@%d...' % (self.get_ip("wlan0"), port))
+        self.logger.info('Creating Entangled Node on %s:%d...' % (self.get_ip("wlan0"), port))
         self.node = EntangledNode(udpPort=port)
 
         if bootstrap_node:

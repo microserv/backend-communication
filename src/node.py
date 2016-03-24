@@ -21,7 +21,7 @@ class Node:
         self.logger = logger
         self.logger.info('Creating Entangled Node on %s:%d...' % (self.get_ip("wlan0"), port))
 
-        self.node = EntangledNode(udpPort=port)
+        self.entangled_node = EntangledNode(udpPort=port)
 
         # A bootstrap node consists of an IP and port to a known node in the
         # network we want to join.
@@ -29,9 +29,9 @@ class Node:
             self.logger.info("Connecting to network through: %s:%s" % (bootstrap_node[0], bootstrap_node[1]))
 
             formatted_bootstrap_node = self._format_bootstrap_node_info(bootstrap_node)
-            self.node.joinNetwork([formatted_bootstrap_node])
+            self.entangled_node.joinNetwork([formatted_bootstrap_node])
         else:
-            self.node.joinNetwork()
+            self.entangled_node.joinNetwork()
 
         logger.info('Node created!')
 
@@ -54,7 +54,7 @@ class Node:
 
         # Query the other nodes in the network to determine whether they have
         # this key.
-        deferred_result = self.node.iterativeFindValue(key)
+        deferred_result = self.entangled_node.iterativeFindValue(key)
         deferred_result.addErrback(self.handle_error)
 
         return deferred_result
@@ -66,7 +66,7 @@ class Node:
         self.logger.info('\nDeleting: "%s"' % key)
         # Query the other nodes in the network to find and delete the key/value
         # pair.
-        deferred_result = node.iterativeDelete(key)
+        deferred_result = self.entangled_node.iterativeDelete(key)
         deferred_result.addErrback(self.handle_error)
 
         return deferred_result
@@ -79,7 +79,7 @@ class Node:
         self.logger.info('Soring "%s" -> "%s"' % (key, value))
         # Attempt to find the closest neighbour node and store the value there.
         # If no nodes are close enough, store it in this node.
-        deferred_result = self.node.iterativeStore(key, value)
+        deferred_result = self.entangled_node.iterativeStore(key, value)
         deferred_result.addErrback(self.handle_error)
 
         return deferred_result

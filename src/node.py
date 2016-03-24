@@ -4,10 +4,6 @@
 from __future__ import print_function
 from entangled.node import EntangledNode
 import netifaces as ni
-import os
-import sys
-import twisted.internet.reactor
-import util
 
 
 class Node(EntangledNode):

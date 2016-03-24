@@ -47,7 +47,6 @@ class Node(EntangledNode):
         The key 'key' is a string of arbitrary length.
         """
         self.logger.info('Retrieving "%s"...' % key)
-
         # Query the other nodes in the network to determine whether they have
         # this key.
         deferred_result = self.iterativeFindValue(key)

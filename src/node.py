@@ -85,5 +85,4 @@ class Node(EntangledNode):
         Get the IPv4 address of the interface with name 'interface'.
         Returns the IPv4 address as a string.
         """
-        ni.ifaddresses(interface)
         return ni.ifaddresses(interface)[2][0]['addr']

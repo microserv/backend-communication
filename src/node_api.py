@@ -15,10 +15,16 @@ logger = util.create_logger("node_api.log")
 
 
 class NodeAPI(Resource):
+    """
+    Handles the basic routing of requests to the appropirate resource.
+    '/{register, unregister}/<service_name>' maps to the 'Register' resource.
+    '/<service_name>' maps to the 'Service' resource.
+    """
 
     def __init__(self, node, web_port):
         Resource.__init__(self)
         self.node = node
+
         reactor.listenTCP(web_port, Site(self))
         logger.info("API listening on: {}".format(web_port))
 
@@ -30,6 +36,11 @@ class NodeAPI(Resource):
 
 
 class Register(Resource):
+    """
+    Handles the registration and unregistration of a service.
+    A service is registered in the DHT with the service name as the key,
+    and a string of IPs to nodes of the service type as the value.
+    """
 
     def __init__(self, node, register_action):
         Resource.__init__(self)
@@ -49,15 +60,25 @@ class Register(Resource):
             request.finish()
 
     def initiate_registration(self, request):
+        """
+        Determine whether there exists services of the same type, if so append
+        the IP of this node to the list of IPs, otherwise create a new list of
+        IPs.
+        """
         json_data = json.loads(cgi.escape(request.content.read()))
         service_name = str(json_data["value"])
 
         deferred_result = self.node.get_value(service_name)
         deferred_result.addCallback(self.finish_registration,
                                     request, service_name)
+
         return NOT_DONE_YET
 
     def finish_registration(self, result, request, service_name):
+        """
+        Actually store the IP and service name of the current node, or return
+        something that indicates that something went wrong.
+        """
         node_ip = self.node.get_ip("wlan0")
         service_ips = []
 

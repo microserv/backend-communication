@@ -81,9 +81,16 @@ class Node(EntangledNode):
 
         return deferred_result
 
-    def get_ip(self, interface):
-        """
-        Get the IPv4 address of the interface with name 'interface'.
-        Returns the IPv4 address as a string.
-        """
-        return ni.ifaddresses(interface)[2][0]['addr']
+def format_bootstrap_node_info(node_info):
+    """
+    Format lists of the format [IP, Port] into tuples readable by an
+    Entangled node.
+    """
+    return (node_info[0], int(node_info[1]))
+
+def get_ip(interface):
+    """
+    Get the IPv4 address of the interface with name 'interface'.
+    Returns the IPv4 address as a string.
+    """
+    return ni.ifaddresses(interface)[2][0]['addr']

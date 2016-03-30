@@ -14,7 +14,7 @@ class Node(EntangledNode):
     """
 
     def __init__(self, logger, port, bootstrap_node=None):
-        super(EntangledNode, self).__init__(udpPort=port)
+        super(self.__class__, self).__init__(udpPort=port)
 
         self.logger = logger
         self.logger.info('Creating Entangled Node on %s:%d...' % (self.get_ip("wlan0"), port))

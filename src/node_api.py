@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-from node import Node
 from twisted.internet import reactor
+from twisted.web.error import Error
 from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
 from twisted.web.server import Site
+from node import Node
 import cgi
 import json
 import util
@@ -29,10 +30,14 @@ class NodeAPI(Resource):
         logger.info("API listening on: {}".format(web_port))
 
     def getChild(self, request_str, request):
-        if request_str in ['register', 'unregister']:
-            return Register(self.node, request_str)
+        request_str = request_str.strip()
+        if request_str:
+            if request_str and request_str in ['register', 'unregister']:
+                return Register(self.node, request_str)
+            else:
+                return Service(self.node, request_str)
         else:
-            return Service(self.node, request_str)
+            raise Error('404', message="The request cannot be empty!")
 
 
 class Register(Resource):

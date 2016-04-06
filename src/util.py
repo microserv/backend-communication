@@ -4,6 +4,8 @@
 import argparse
 import logging
 import logging.config
+import netifaces as ni
+
 
 IP_DELIM = "|"
 
@@ -48,3 +50,22 @@ def create_logger(filename):
         }
     })
     return logger
+
+def get_ip():
+    """
+    Get the IPv4 address of the interface with name 'interface'.
+    Returns the IPv4 address as a string.
+    """
+    possible_interfaces = ni.interfaces()
+
+    for interface in possible_interfaces:
+        if interface != "lo":
+            try:
+                addresses = ni.ifaddresses(interface)
+                if len(addresses) > 1:
+                    return ni.ifaddresses(interface)[2][0]['addr']
+            except ValueError:
+                # The interface does not exist, so we skip it.
+                pass
+
+

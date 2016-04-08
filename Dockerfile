@@ -7,11 +7,13 @@ RUN pip install virtualenv
 
 RUN git clone https://github.com/microserv/backend-communication /var/communication-backend
 
-RUN cp /var/communication-backend/node_api.ini /etc/supervisor.d/
-RUN cd /var/communication-backend && pip install -r requirements.txt
+WORKDIR /var/communication-backend
+RUN virtualenv venv
+
+RUN /var/communication-backend/venv/bin/pip install -r requirements.txt
 
 RUN git clone https://github.com/microserv/entangled-dht entangled
-RUN cd entangled && python setup.py install
+RUN cd entangled && /var/communication-backend/venv/bin/python setup.py install
 
 RUN rm -rf communication-backend/
 RUN rm -rf entangled/

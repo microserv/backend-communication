@@ -10,6 +10,7 @@ RUN git clone https://github.com/microserv/backend-communication /var/communicat
 WORKDIR /var/communication-backend
 RUN virtualenv venv
 
+RUN cp node_api.ini /etc/supervisor.d/
 RUN /var/communication-backend/venv/bin/pip install -r requirements.txt
 
 RUN git clone https://github.com/microserv/entangled-dht entangled

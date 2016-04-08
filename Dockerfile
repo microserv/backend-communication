@@ -3,6 +3,7 @@ MAINTAINER Pål Karlsrud <paal@128.no>
 
 RUN apk-install --no-cache python git py-pip python-dev linux-headers musl-dev gcc supervisor
 RUN mkdir -p /etc/supervisor.d/
+RUN pip install virtualenv
 
 RUN git clone https://github.com/microserv/backend-communication communication-backend
 RUN cp -R communication-backend/ /var/
@@ -16,5 +17,6 @@ RUN rm -rf communication-backend/
 RUN rm -rf entangled/
 
 # 8080 is the default port to the node API.
-CMD ["/usr/bin/supervisord"]
 EXPOSE 8080
+
+ENTRYPOINT ["/usr/bin/supervisord", "-t", "-n"]

@@ -14,10 +14,12 @@ Each node runs a HTTP API on port 8080.
 This API can be used to register/unregister services and get the IPs of an
 abitary service.
 
-The following guide describes how to use the API.
+### How to use this API with a service
+Let's assume you want to use the microauth service. This can by done by:
 
-1. Begin by registering the service. This is done by POSTing to
-   127.0.0.1:8080/register/\<service_name\>.
-   Which will return a 200 status code if the registration was successful.
-2. After doing this, you can obtain the IPs of a given service by sending a GET
-   request to 127.0.0.1/\<service_name\>.
+1. Obtain the IP of the service. This is done by making a GET request to the
+   local node. This node should always run on port 8080.
+   You can obtain the IP to an instance of the microauth service by issuing the
+   following request: `curl http://127.0.0.1:8080/microauth` this will return
+   a JSON array with the IPs too all the instances.
+2. Pick a random IP from the array of IPs.

@@ -143,6 +143,6 @@ if __name__ == '__main__':
 
     args = util.parse_node_arguments()
     node = Node(logger, **vars(args))
-    root = NodeAPI(node, 8080)
+    root = NodeAPI(node, 9001)
 
     reactor.run()

@@ -16,7 +16,6 @@ RUN /var/communication-backend/venv/bin/pip install -r requirements.txt
 RUN git clone https://github.com/microserv/entangled-dht entangled
 RUN cd entangled && /var/communication-backend/venv/bin/python setup.py install
 
-RUN rm -rf communication-backend/
 RUN rm -rf entangled/
 
 # 9001 is the default port to the node API, and 5000 is the port used by the

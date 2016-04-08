@@ -16,7 +16,8 @@ RUN cd entangled && python setup.py install
 RUN rm -rf communication-backend/
 RUN rm -rf entangled/
 
-# 8080 is the default port to the node API.
-EXPOSE 8080
+# 9001 is the default port to the node API, and 5000 is the port used by the
+# nodes internally.
+EXPOSE 9001 5000
 
 ENTRYPOINT ["/usr/bin/supervisord", "-t", "-n"]

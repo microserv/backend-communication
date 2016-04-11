@@ -5,16 +5,18 @@ RUN apk-install --no-cache python git py-pip python-dev linux-headers musl-dev g
 RUN mkdir -p /etc/supervisor.d/
 RUN pip install virtualenv
 
-RUN git clone https://github.com/microserv/backend-communication /var/communication-backend
+ENV BASE_DIR /var/communication-backend
 
-WORKDIR /var/communication-backend
+RUN git clone https://github.com/microserv/backend-communication ${BASE_DIR}
+
+WORKDIR ${BASE_DIR}
 RUN virtualenv venv
 
 RUN cp node_api.ini /etc/supervisor.d/
-RUN /var/communication-backend/venv/bin/pip install -r requirements.txt
+RUN ${BASE_DIR}/venv/bin/pip install -r requirements.txt
 
 RUN git clone https://github.com/microserv/entangled-dht entangled
-RUN cd entangled && /var/communication-backend/venv/bin/python setup.py install
+RUN cd entangled && ${BASE_DIR}/venv/bin/python setup.py install
 
 RUN rm -rf entangled/
 

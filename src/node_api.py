@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from node import Node
+from random import choice
 from twisted.internet import reactor
 from twisted.web.error import Error
 from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
 from twisted.web.server import Site
-from node import Node
 import cgi
 import json
 import util
@@ -123,11 +124,13 @@ class Service(Resource):
             request.finish()
 
     def async_return(self, result, request):
+        ip = None
         if result:
             for key, value in result.items():
                 result[key] = value.split(util.IP_DELIM)
+                ip = choice(result[key])
 
-        request.write(json.dumps(result))
+        request.write(json.dumps(ip))
         request.finish()
 
     def render_GET(self, request):

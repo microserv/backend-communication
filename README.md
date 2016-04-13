@@ -21,4 +21,4 @@ Let's assume you want to use the microauth service. This can by done by:
    local node. This node should always run on port 9001.
    You can obtain the IP to an instance of the microauth service by issuing the
    following request: `curl http://127.0.0.1:9001/microauth` this will return
-   a JSON array with the IPs too all the instances.
+   an IP if an service is registered with this name.

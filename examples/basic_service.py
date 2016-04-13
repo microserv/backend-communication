@@ -28,6 +28,6 @@ r = requests.post(NODE_ADDR + "/register", data=json.dumps({"service_name": SERV
 if r.status_code == 200:
     # Now get the IP we just stored.
     r = requests.get(NODE_ADDR + "/" + SERVICE_NAME)
-    print(json.loads(r.text)[SERVICE_NAME])
+    print(json.loads(r.text))
 else:
     print("Could not register this service! The node_api log may have some more details.")

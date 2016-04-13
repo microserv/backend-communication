@@ -84,7 +84,7 @@ class Register(Resource):
         Actually store the IP and service name of the current node, or return
         something that indicates that something went wrong.
         """
-        node_ip = self.node.get_ip()
+        node_ip = util.get_ip()
         service_ips = []
 
         if type(result) is dict:

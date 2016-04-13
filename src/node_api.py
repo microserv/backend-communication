@@ -129,8 +129,11 @@ class Service(Resource):
             for key, value in result.items():
                 result[key] = value.split(util.IP_DELIM)
                 ip = choice(result[key])
+            request.write(json.dumps(ip))
+            request.setResponseCode(200)
+        else:
+            request.setResponseCode(404)
 
-        request.write(json.dumps(ip))
         request.finish()
 
     def render_GET(self, request):

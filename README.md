@@ -9,9 +9,10 @@
 3. Profit!
 
 ### Usage
+`python node_api.py [-p [Internal port used by the nodes] -b [Known bootstrap IP] [Known bootstrap port]]`
 
 Each node runs a HTTP API on port 9001.
-This API can be used to register/unregister services and get the IPs of an
+This API can be used to register/unregister services and get the IP of an
 abitary service.
 
 ### How to initilze the node and get an IP for another service.

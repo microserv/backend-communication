@@ -11,7 +11,7 @@ class Node(EntangledNode):
     key/value pairs from the DHT network.
     """
 
-    def __init__(self, logger, port, bootstrap_node=None, interface="eth0"):
+    def __init__(self, logger, port=5000, bootstrap_node=None, interface="eth0"):
         super(self.__class__, self).__init__(udpPort=port)
 
         self.logger = logger

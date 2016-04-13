@@ -68,7 +68,7 @@ class Node(EntangledNode):
         The key 'key' and value 'value' must both be strings.
         """
         if self.logger:
-            self.logger.info('Soring "%s" -> "%s"' % (key, value))
+            self.logger.info('Storing "%s" -> "%s"' % (key, value))
         # Attempt to find the closest neighbour node and store the value there.
         # If no nodes are close enough, store it in this node.
         deferred_result = self.iterativeStore(key, value)

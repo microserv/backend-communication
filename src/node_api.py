@@ -71,7 +71,7 @@ class Register(Resource):
         IPs.
         """
         json_data = json.loads(cgi.escape(request.content.read()))
-        service_name = str(json_data["value"])
+        service_name = str(json_data["service_name"])
 
         deferred_result = self.node.get_value(service_name)
         deferred_result.addCallback(self.finish_registration,
@@ -138,7 +138,7 @@ class Service(Resource):
     def render_POST(self, request):
         json_data = json.loads(cgi.escape(request.content.read()))
         deferred_result = self.node.store_value(self.service_name,
-                                               json_data["value"])
+                                               json_data["service_name"])
         deferred_result.addCallback(self.async_success, request)
         return NOT_DONE_YET
 

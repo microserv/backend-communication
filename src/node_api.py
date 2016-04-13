@@ -123,6 +123,10 @@ class Service(Resource):
             request.finish()
 
     def async_return(self, result, request):
+        if result:
+            for key, value in result.items():
+                result[key] = value.split(util.IP_DELIM)
+
         request.write(json.dumps(result))
         request.finish()
 

@@ -14,11 +14,11 @@ Each node runs a HTTP API on port 9001.
 This API can be used to register/unregister services and get the IPs of an
 abitary service.
 
-### How to use this API with a service
-Let's assume you want to use the microauth service. This can by done by:
+### How to initilze the node and get an IP for another service.
+1. Start the API using: `python node_api.py`
+2. Register your service by POSTing to `http://127.0.0.1:9001/register` with the
+   following payload: `{"service_name": "<YOUR SERVICE NAME HERE>"}`.
+3. Obtain an IP to the service you want to connect to by submitting a GET
+   request to `http:/127.0.0.1:9001/<service_name>`. This will return a single
+   string containing the IP to an instance of the service.
 
-1. Obtain the IP of the service. This is done by making a GET request to the
-   local node. This node should always run on port 9001.
-   You can obtain the IP to an instance of the microauth service by issuing the
-   following request: `curl http://127.0.0.1:9001/microauth` this will return
-   an IP if an service is registered with this name.

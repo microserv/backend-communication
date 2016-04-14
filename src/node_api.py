@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from klein import run, route, Klein
 from node import Node
 from random import choice
-from twisted.internet import reactor
-from twisted.web.error import Error
-from twisted.web.resource import NoResource
-from twisted.web.resource import Resource
 from twisted.web.server import NOT_DONE_YET
-from twisted.web.server import Site
-from klein import run, route, Klein
 import cgi
 import json
 import util

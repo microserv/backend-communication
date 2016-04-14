@@ -81,7 +81,6 @@ class NodeAPI(Klein):
         request.finish()
 
 if __name__ == '__main__':
-
     args = util.parse_node_arguments()
     node = Node(logger, **vars(args))
     node_api = NodeAPI(node)

@@ -13,7 +13,7 @@ import util
 logger = util.create_logger("node_api.log")
 
 
-class NodeAPI(Klein):
+class NodeAPI:
     app = Klein()
 
     def __init__(self, node):

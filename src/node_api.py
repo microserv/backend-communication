@@ -127,8 +127,10 @@ class Service(Resource):
         ip = None
         if result:
             for key, value in result.items():
-                result[key] = value.split(util.IP_DELIM)
-                ip = choice(result[key])
+                if type(value) is list:
+                    result[key] = value.split(util.IP_DELIM)
+                    ip = choice(result[key])
+
             request.write(json.dumps(ip))
             request.setResponseCode(200)
         else:

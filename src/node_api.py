@@ -64,7 +64,7 @@ class NodeAPI:
     def async_return(self, result, request):
         status_code = 200
 
-        if result and not request.getHeader("Content-Type") == "application/json":
+        if result and not util.contains_json(request):
             ip = None
             for key, value in result.items():
                 if type(value) is str:
@@ -72,7 +72,7 @@ class NodeAPI:
                     ip = choice(result[key])
 
             request.write(json.dumps(ip))
-        elif not result and request.getHeader("Content-Type") == "application/json":
+        elif not result and util.contains_json(request):
             logger.info("Action successful!")
         else:
             status_code = 404

@@ -52,9 +52,6 @@ def create_logger(filename):
     })
     return logger
 
-def contains_json(request):
-    return request.getHeader("Content-Type") == JSON_CONTENT_TYPE
-
 def get_ip():
     """
     Get the IPv4 address of the interface with name 'interface'.

@@ -23,7 +23,7 @@ SERVICE_NAME = "basic_service"
 
 # Begin by registering your new service.
 # This is done by POSTing to /register.
-r = requests.post(NODE_ADDR + "/register", data=json.dumps({"service_name": SERVICE_NAME}))
+r = requests.post(NODE_ADDR + "/register", json={"service_name": SERVICE_NAME})
 
 if r.status_code == 200:
     # Now get the IP we just stored.

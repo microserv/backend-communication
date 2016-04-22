@@ -44,7 +44,7 @@ class Node(EntangledNode):
             self.logger.info('Retrieving "%s"...' % key)
         # Query the other nodes in the network to determine whether they have
         # this key.
-        deferred_result = self.iterativeFindValue(key)
+        deferred_result = self.iterativeFindValue(str(key))
         deferred_result.addErrback(self.handle_error)
 
         return deferred_result

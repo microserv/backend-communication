@@ -8,7 +8,6 @@ import netifaces as ni
 
 
 IP_DELIM = "|"
-JSON_CONTENT_TYPE = "application/json"
 
 def parse_node_arguments():
     parser = argparse.ArgumentParser()

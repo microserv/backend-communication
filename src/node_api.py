@@ -58,7 +58,7 @@ class Register(Resource):
         pass
 
     def async_success(self, result, request):
-        if not result:
+        if not result or type(result) is list:
             logger.info("Action successful!")
             request.setResponseCode(200)
             request.finish()
@@ -127,10 +127,11 @@ class Service(Resource):
     def async_return(self, result, request):
         ip = None
         if result:
-            for key, value in result.items():
-                if type(value) is list:
-                    result[key] = value.split(util.IP_DELIM)
-                    ip = choice(result[key])
+            if type(result) is dict:
+                for key, value in result.items():
+                    if type(value) is str:
+                        result[key] = value.split(util.IP_DELIM)
+                        ip = choice(result[key])
 
             request.write(json.dumps(ip))
             request.setResponseCode(200)

@@ -13,6 +13,7 @@ WORKDIR ${BASE_DIR}
 RUN virtualenv venv
 
 RUN cp node_api.ini /etc/supervisor.d/
+RUN cp register_service.ini /etc/supervisor.d/
 RUN ${BASE_DIR}/venv/bin/pip install -r requirements.txt
 
 RUN git clone https://github.com/microserv/entangled-dht entangled

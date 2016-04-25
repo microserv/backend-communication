@@ -59,7 +59,7 @@ def get_ip():
     possible_interfaces = ni.interfaces()
 
     for interface in possible_interfaces:
-        if interface != "lo":
+        if interface not in ["lo", "dummy0"]:
             try:
                 addresses = ni.ifaddresses(interface)
                 if len(addresses) > 1:

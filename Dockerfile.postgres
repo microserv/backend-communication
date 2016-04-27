@@ -14,6 +14,7 @@ RUN virtualenv venv
 
 RUN cp node_api.ini /etc/supervisor.d/
 RUN cp register_service.ini /etc/supervisor.d/
+RUN cp postgres.ini /etc/supervisor.d/
 RUN cp init_service.sh /usr/local/bin/
 RUN ${BASE_DIR}/venv/bin/pip install -r requirements.txt
 

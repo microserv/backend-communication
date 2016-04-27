@@ -1,4 +1,4 @@
 #!/bin/sh
-/usr/local/bin/docker-entrypoint.sh
+/docker-entrypoint.sh echo ""
 su - root
 /usr/bin/supervisord -t -n

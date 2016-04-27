@@ -1,7 +1,7 @@
-FROM tyauvil/alpine-postgres
+FROM rlesouef/alpine-postgres
 MAINTAINER Pål Karlsrud <paal@128.no>
 
-RUN apk-install --no-cache python git py-pip python-dev linux-headers musl-dev gcc supervisor
+RUN apk add --no-cache python git py-pip python-dev linux-headers musl-dev gcc supervisor
 RUN mkdir -p /etc/supervisor.d/
 RUN pip install virtualenv
 

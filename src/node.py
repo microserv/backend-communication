@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from socket import gethostbyname
 from entangled.node import EntangledNode
+import re
 
 class Node(EntangledNode):
     """
@@ -22,8 +24,8 @@ class Node(EntangledNode):
             if self.logger:
                 self.logger.info("Connecting to network through: %s:%s" % (bootstrap_node[0], bootstrap_node[1]))
 
-            formatted_bootstrap_node = format_bootstrap_node_info(bootstrap_node)
-            self.joinNetwork([formatted_bootstrap_node])
+            bootstrap_node_info = get_bootstrap_node_info(bootstrap_node)
+            self.joinNetwork([bootstrap_node_info])
         else:
             self.joinNetwork()
 
@@ -76,9 +78,22 @@ class Node(EntangledNode):
 
         return deferred_result
 
-def format_bootstrap_node_info(node_info):
+
+def get_bootstrap_node_info(node_info):
     """
     Format lists of the format [IP, Port] into tuples readable by an
     Entangled node.
+
+    If a hostname is given, resolve the hostname to a IP.
     """
-    return (node_info[0], int(node_info[1]))
+
+    ip = node_info[0]
+
+    # Determine whether an IP or hostname was given, if a hostname was given,
+    # resolve the hostname to an IP, as Twisted does not do this on its own.
+    if re.search('[a-zA-Z]+', node_info[0]):
+        # We do for now care about this request not being async, as the node
+        # has not yet started.
+        ip = gethostbyname(node_info[0])
+
+    return (ip, int(node_info[1]))

@@ -2,14 +2,11 @@
 This examples assumes that you already have a node listening on port 9001
 A new node is started by running the following command:
 
-    python node_api.py 5000
-
-Where 5000 is the port which the DHT network uses internally.
-
+    python node_api.py
 
 You can add a node to a network which already exists by using the following command
 
-    python node_api.py -p 5001 -b 127.0.0.1 5000
+    python node_api.py -p 10003 -b 127.0.0.1 10002
 
 This is however not really needed, as this will be done automatically in production.
 """

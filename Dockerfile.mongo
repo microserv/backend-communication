@@ -6,6 +6,7 @@ RUN mkdir -p /etc/supervisor.d/
 RUN pip install virtualenv
 
 ENV BASE_DIR /var/communication-backend
+ENV BOOTSTRAP_PORT 10002
 
 RUN git clone https://github.com/microserv/backend-communication ${BASE_DIR}
 
@@ -22,8 +23,8 @@ RUN cd entangled && ${BASE_DIR}/venv/bin/python setup.py install
 RUN rm -rf entangled/
 RUN curl -o /etc/supervisor.d/mongodb.ini https://128.no/f/mongodb.ini
 
-# 9001 is the default port to the node API, and 5000 is the port used by the
+# 9001 is the default port to the node API, and 10002 is the port used by the
 # nodes internally.
-EXPOSE 9001 5000
+EXPOSE 9001 10002
 
 ENTRYPOINT ["/usr/bin/supervisord", "-t", "-n"]

@@ -1,5 +1,8 @@
 # Service-to-service communication
 
+[![Build Status](https://travis-ci.org/microserv/backend-communication.svg?branch=master)](https://travis-ci.org/microserv/backend-communication) [![Coverage Status](https://coveralls.io/repos/github/microserv/backend-communication/badge.svg?branch=master)](https://coveralls.io/github/microserv/backend-communication?branch=master)
+
+
 ### How to contribute
 * Read the [contribution guidelines](https://github.com/microserv/contribution-guidelines)
 
@@ -22,4 +25,3 @@ abitary service.
 3. Obtain an IP to the service you want to connect to by submitting a GET
    request to `http:/127.0.0.1:9001/<service_name>`. This will return a single
    string containing the IP to an instance of the service.
-

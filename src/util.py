@@ -17,10 +17,16 @@ def parse_node_arguments():
     return parser.parse_args()
 
 def ips_to_string(ip_list):
-    return IP_DELIM.join(ip_list)
+    if len(ip_list) > 0:
+        return IP_DELIM.join(ip_list)
+    else:
+        return None
 
 def split_ips(ip_as_string):
-    return ip_as_string.split(IP_DELIM)
+    if ip_as_string is None:
+        return []
+    else:
+        return ip_as_string.split(IP_DELIM)
 
 def create_logger(filename):
     logger = logging.getLogger(__name__)

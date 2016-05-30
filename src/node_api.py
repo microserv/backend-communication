@@ -54,8 +54,36 @@ class Register(Resource):
         self.node = node
         self.register_action = register_action
 
-    def unregister(self, service_name):
-        pass
+    def initiate_unregistration(self, request):
+        json_data = json.loads(cgi.escape(request.content.read()))
+        service_name = str(json_data["service_name"])
+
+        deferred_result = self.node.get_value(service_name)
+        deferred_result.addCallback(self.finish_unregistration,
+                                    request, service_name)
+
+        return NOT_DONE_YET
+
+    def finish_unregistration(self, result, request, service_name):
+        node_ip = util.get_ip()
+        service_ips = []
+
+        if type(result) is dict:
+            service_ips.extend(util.split_ips(result[service_name]))
+
+        try:
+            service_ips.remove(node_ip)
+            deferred_result = self.node.store_value(service_name,
+                                                util.ips_to_string(service_ips))
+            deferred_result.addCallback(self.async_success, request)
+            logger.info("Unregistering {} as a {}".format(node_ip, service_name))
+
+            return NOT_DONE_YET
+        except ValueError:
+            logger.info("{} is not registered".format(node_ip, service_name))
+            request.setResponseCode(200)
+            request.finish()
+
 
     def async_success(self, result, request):
         if not result or type(result) is list:
@@ -105,8 +133,8 @@ class Register(Resource):
             self.initiate_registration(request)
             return NOT_DONE_YET
         else:
-            self.unregister(service_name)
-            return 404
+            self.initiate_unregistration(request)
+            return NOT_DONE_YET
 
 
 class Service(Resource):
